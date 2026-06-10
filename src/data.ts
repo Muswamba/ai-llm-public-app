@@ -5,7 +5,7 @@ export const FEATURES: FeatureItem[] = [
     id: 'llm-basics',
     title: 'LLM Basics',
     tagline: 'Understand Neural Architectures',
-    details: 'Learn how weights, bias, context windows, and embeddings form the foundation of models like GPT and Gemini.',
+    details: 'Learn how weights, bias, context windows, and embeddings form the foundation of modern language models.',
     iconName: 'Cpu',
     learningOutcome: 'Translate theoretical deep learning into practical API parameters.'
   },
@@ -199,20 +199,19 @@ export const MOCK_RESPONSES: Record<string, string> = {
 To help you learn, here is a quick modular code snippet depicting a simple Node.js custom prompt completion frame:
 
 \`\`\`typescript
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI();
-// Under Beginner mode, we keep temperature low (0.2) for standard factual correctness:
-const response = await ai.models.generateContent({
-  model: 'gemini-2.5-flash',
-  contents: 'Teach me the basics of prompt embeddings',
-  config: {
-    temperature: 0.2, // Consistent, factual responses
-    maxOutputTokens: 800
-  }
+// The browser sends the prompt to your own backend.
+// The backend owns the provider key and can call OpenAI, Ollama, OpenRouter, etc.
+const response = await fetch('/api/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    message: 'Teach me the basics of prompt embeddings',
+    mode: 'Beginner'
+  })
 });
 
-console.log(response.text);
+const data = await response.json();
+console.log(data.text);
 \`\`\`
 
 Feel free to click any of the **Prompt Examples** keynotes below or type your questions! I support Beginner, Developer, and Product mode contexts depending on your background.`,
@@ -226,7 +225,7 @@ Think of a Large Language Model as a super-powered autocomplete system. However,
   - The word \`"learning"\` might be split into two tokens: \`["learn", "ing"]\`.
   - Common short words (e.g., \`"the"\`, \`"and"\`) are usually single tokens.
 - **Why do they matter?**
-  1. **Context Window Constraint:** A model has a hard limit on the total input + output tokens it can hold in memory (e.g., 8k, 32k, or 2M for Gemini).
+  1. **Context Window Constraint:** A model has a hard limit on the total input + output tokens it can hold in memory (e.g., 8k, 32k, 128k, or more depending on provider).
   2. **Billing Scale:** APIs bill you strictly based on the count of tokens consumed.
   3. **Representation Accuracy:** Bad tokenization (like in non-English vocabulary) makes processing slower and more expensive!
 
@@ -299,7 +298,7 @@ Here is a blueprint for implementing high-performance semantic retrieval of know
 
 #### 📐 Architectural Pipeline Sequence:
 1. **Ingestion & Shredding:** Parse dynamic text structures (PDFs, Markdown documentation). Segment documents into chunks of a fixed duration/size (e.g. 500 characters) with a 50-character overlap.
-2. **Vector Space Processing:** Convert characters into 1536-dimensional numeric coordinates (embeddings) utilizing an embedding service like Gemini.
+2. **Vector Space Processing:** Convert text into numeric coordinates (embeddings) using your chosen embedding provider or local model.
 3. **Storage Index (Vector DB):** Store coordinates inside Pinecone, pgvector on PostgreSQL, or ChromaDB.
 4. **Retrieval Trigger:** On incoming chat text, generate a search vector. Pull the **top 4 most relevant chunks** dynamically using Cosine Similarity calculation.
 5. **AI Synthesis:** Inject retrieval context into the user query, and request response from the chat assistant.

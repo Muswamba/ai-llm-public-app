@@ -95,13 +95,13 @@ FeatureCard
 Use accessible buttons and inputs.
 Make the layout responsive.
 Avoid unnecessary libraries unless needed.
-Do not use deprecated Gemini SDKs.
+Do not hard-code the app to one LLM provider.
 Do not put secrets in client components.
 
 Suggested routes:
 
 / for landing page
-/playground for AI playground
+/chat for AI chat workspace
 /course for course roadmap
 
 Expected output:
@@ -115,4 +115,4 @@ how to run locally
 short explanation of each major component
 
 Important:
-This is UI/UX phase only. The next phase will connect the chat UI to Gemini or Ollama.
+This is UI/UX phase only. The next phase will connect the chat UI to a provider-neutral backend.

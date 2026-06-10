@@ -22,6 +22,25 @@ const viewToPath: Record<AppView, string> = {
   course: '/course'
 };
 
+const buildLocalMockResponse = (query: string, activeMode: PlayMode) => {
+  const matchedText = MOCK_RESPONSES[query] || MOCK_RESPONSES.default;
+
+  // Focus profiles let the same chat UI teach different audiences.
+  if (activeMode === 'Beginner' && !MOCK_RESPONSES[query]) {
+    return `[Beginner Focus Mode enabled]\n\nLet's break this down in plain English:\n\n${matchedText}`;
+  }
+
+  if (activeMode === 'Developer' && !MOCK_RESPONSES[query]) {
+    return `[Developer Focus Mode enabled]\n\nHere are the API and implementation details:\n\n${matchedText}`;
+  }
+
+  if (activeMode === 'Product' && !MOCK_RESPONSES[query]) {
+    return `[Product Focus Mode enabled]\n\nHere are the product, cost, and workflow notes:\n\n${matchedText}`;
+  }
+
+  return matchedText;
+};
+
 export default function App() {
   const [currentView, setCurrentView] = useState<AppView>(() => pathToView(window.location.pathname));
   const [messages, setMessages] = useState<Message[]>([]);
@@ -61,7 +80,7 @@ export default function App() {
   };
 
   // Chat message submission engine.
-  const handleSendMessage = (customText?: string) => {
+  const handleSendMessage = async (customText?: string) => {
     const query = (customText || inputValue).trim();
     if (!query || isLoading) return;
 
@@ -77,32 +96,56 @@ export default function App() {
     setInputValue('');
     setIsLoading(true);
 
-    // 2. Use mocked responses for the tutorial; replace this block with a real API call later.
-    setTimeout(() => {
-      const matchedText = MOCK_RESPONSES[query] || MOCK_RESPONSES.default;
+    try {
+      // 2. Send the prompt to our backend instead of exposing provider keys in the browser.
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: query,
+          mode: activeMode,
+          history: [...messages, userMsg].slice(-8).map((msg) => ({
+            role: msg.role,
+            content: msg.content
+          }))
+        })
+      });
 
-      // Focus profiles let the same chat UI teach different audiences.
-      let modifiedResponse = matchedText;
-      if (activeMode === 'Beginner' && !MOCK_RESPONSES[query]) {
-        modifiedResponse = `[Beginner Focus Mode enabled]\n\nLet's break this down in plain English:\n\n${matchedText}`;
-      } else if (activeMode === 'Developer' && !MOCK_RESPONSES[query]) {
-        modifiedResponse = `[Developer Focus Mode enabled]\n\nHere are the API and implementation details:\n\n${matchedText}`;
-      } else if (activeMode === 'Product' && !MOCK_RESPONSES[query]) {
-        modifiedResponse = `[Product Focus Mode enabled]\n\nHere are the product, cost, and workflow notes:\n\n${matchedText}`;
+      if (!response.ok) {
+        throw new Error(`Backend returned ${response.status}`);
       }
+
+      const data = await response.json() as {
+        text?: string;
+        modelName?: string;
+        tokens?: number;
+      };
 
       const assistantMsg: Message = {
         id: `msg-ai-${Date.now()}`,
         role: 'assistant',
-        content: modifiedResponse,
+        content: data.text || buildLocalMockResponse(query, activeMode),
         timestamp: new Date(),
-        tokens: Math.floor(Math.random() * 200) + 180,
-        modelName: 'smsoftware-ai-v0.1'
+        tokens: data.tokens || Math.ceil((data.text || '').length / 4) || 194,
+        modelName: data.modelName || 'provider-neutral-backend'
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
+    } catch (error) {
+      // 3. Keep the tutorial usable even when the backend/provider is not running yet.
+      const assistantMsg: Message = {
+        id: `msg-ai-${Date.now()}`,
+        role: 'assistant',
+        content: `${buildLocalMockResponse(query, activeMode)}\n\n_Backend note: using local UI fallback because /api/chat was unavailable._`,
+        timestamp: new Date(),
+        tokens: Math.floor(Math.random() * 200) + 180,
+        modelName: 'local-ui-fallback'
+      };
+
+      setMessages((prev) => [...prev, assistantMsg]);
+    } finally {
       setIsLoading(false);
-    }, 900); // realistic typing latency delay
+    }
   };
 
   const handleResetChat = () => {

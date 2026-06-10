@@ -17,6 +17,10 @@ export default defineConfig(() => {
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      // In local development, React runs on :3000 and the Express API runs on :8787.
+      proxy: {
+        '/api': 'http://localhost:8787',
+      },
     },
   };
 });
