@@ -37,7 +37,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
               theme === 'dark' ? 'border-slate-800/60 bg-black/50' : 'border-slate-200 bg-slate-50/70'
             }`}>
               <div className={`px-4 py-1.5 flex items-center justify-between border-b text-[10px] ${
-                theme === 'dark' ? 'bg-slate-900 border-slate-800/60 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-555'
+                theme === 'dark' ? 'bg-slate-900 border-slate-800/60 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-500'
               }`}>
                 <span>CODE BLOCK</span>
                 <button 
@@ -60,7 +60,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
                 </button>
               </div>
               <pre className={`p-4 overflow-x-auto leading-relaxed font-mono whitespace-pre select-all text-[11px] ${
-                theme === 'dark' ? 'text-cyan-300' : 'text-indigo-805'
+                theme === 'dark' ? 'text-cyan-300' : 'text-indigo-800'
               }`}>
                 <code>{codeText}</code>
               </pre>
@@ -94,7 +94,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
       if (line.trim().startsWith('#### ')) {
         elements.push(
           <h5 key={`h4-${index}`} className={`font-display font-medium text-sm mt-3 mb-1.5 transition-colors ${
-            theme === 'dark' ? 'text-cyan-305' : 'text-indigo-600'
+            theme === 'dark' ? 'text-cyan-300' : 'text-indigo-600'
           }`}>
             {line.replace('#### ', '')}
           </h5>
@@ -109,7 +109,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
         const parts = rawText.split('**');
         elements.push(
           <li key={`li-${index}`} className={`text-sm ml-4 list-disc mb-1 leading-relaxed transition-colors ${
-            theme === 'dark' ? 'text-slate-300' : 'text-slate-655'
+            theme === 'dark' ? 'text-slate-300' : 'text-slate-600'
           }`}>
             {parts.map((p, pIndex) => 
               pIndex % 2 === 1 ? (
@@ -128,8 +128,8 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
         
         const cols = line.split('|').map(s => s.trim()).filter(s => s !== '');
         elements.push(
-          <div key={`tr-${index}`} className={`grid grid-cols-3 gap-2 py-2 px-3 odd:bg-white/2 rounded text-xs font-mono border-b last:border-0 hover:bg-white/5 transition-colors ${
-            theme === 'dark' ? 'text-slate-300 border-white/5' : 'text-slate-655 border-slate-100'
+          <div key={`tr-${index}`} className={`grid grid-cols-3 gap-2 py-2 px-3 odd:bg-white/[0.02] rounded text-xs font-mono border-b last:border-0 hover:bg-white/5 transition-colors ${
+            theme === 'dark' ? 'text-slate-300 border-white/5' : 'text-slate-600 border-slate-100'
           }`}>
             {cols.map((col, colIndex) => (
               <span key={`col-${colIndex}`} className={colIndex === 0 ? (theme === 'dark' ? "font-semibold text-white" : "font-semibold text-slate-800") : ""}>
@@ -147,7 +147,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
         const formattedLine = parts.map((part, pIndex) => {
           if (pIndex % 2 === 1) {
             // Check if there is nested inline code e.g. `code`
-            return <strong key={pIndex} className="text-blue-550 font-semibold">{part}</strong>;
+            return <strong key={pIndex} className="text-blue-500 font-semibold">{part}</strong>;
           }
           // Process backtick highlights like `code`
           const codeParts = part.split('`');
@@ -183,7 +183,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
     <div 
       id={`chat-msg-${message.id}`}
       className={`flex gap-4 w-full group animate-fadeIn transition-all py-5 border-b last:border-0 ${
-        theme === 'dark' ? 'border-slate-800/50' : 'border-slate-150'
+        theme === 'dark' ? 'border-slate-800/50' : 'border-slate-200'
       } ${
         isUser ? 'justify-end' : theme === 'dark' ? 'justify-start bg-slate-900/10 px-4 rounded-xl' : 'justify-start bg-slate-50 px-4 rounded-xl border border-slate-100'
       }`}
@@ -209,7 +209,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
             <>
               <span className="text-slate-400">•</span>
               <span className={`uppercase tracking-widest text-[9px] px-1.5 py-0.5 rounded border font-semibold ${
-                theme === 'dark' ? 'bg-blue-900/15 border-blue-400/20 text-blue-400' : 'bg-blue-50 border-blue-200 text-blue-650'
+                theme === 'dark' ? 'bg-blue-900/15 border-blue-400/20 text-blue-400' : 'bg-blue-50 border-blue-200 text-blue-600'
               }`}>
                 {message.modelName || 'backend-response'}
               </span>
@@ -236,13 +236,13 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
         {!isUser && (
           <div className="flex items-center gap-4 mt-3 font-mono text-[9px] text-slate-500 group-hover:text-slate-400 transition-colors">
             <span className="flex items-center gap-1">
-              <Lucide.Cpu className="w-2.5 h-2.5" /> Dev-Latency: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-650 font-semibold'}>142ms</strong>
+              <Lucide.Cpu className="w-2.5 h-2.5" /> Dev-Latency: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-600 font-semibold'}>142ms</strong>
             </span>
             <span className="flex items-center gap-1">
-              <Lucide.Hash className="w-2.5 h-2.5" /> Tokens: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-650 font-semibold'}>{message.tokens || 194}</strong>
+              <Lucide.Hash className="w-2.5 h-2.5" /> Tokens: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-600 font-semibold'}>{message.tokens || 194}</strong>
             </span>
             <span className="hidden sm:flex items-center gap-1">
-              <Lucide.Server className="w-2.5 h-2.5" /> Source: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-650 font-semibold'}>{message.modelName || 'backend'}</strong>
+              <Lucide.Server className="w-2.5 h-2.5" /> Source: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-600 font-semibold'}>{message.modelName || 'backend'}</strong>
             </span>
             <span className="flex items-center gap-1 cursor-pointer hover:text-blue-500" onClick={() => handleCopy(message.content)}>
               <Lucide.Copy className="w-2.5 h-2.5" /> Copy Raw Response
@@ -253,7 +253,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
 
       {isUser && (
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 self-start mt-1 border ${
-          theme === 'dark' ? 'bg-slate-900 border-slate-800/60 text-blue-400' : 'bg-white border-slate-205 text-blue-500 shadow-sm'
+          theme === 'dark' ? 'bg-slate-900 border-slate-800/60 text-blue-400' : 'bg-white border-slate-200 text-blue-500 shadow-sm'
         }`}>
           <Lucide.User className="w-4 h-4 text-blue-500" />
         </div>
