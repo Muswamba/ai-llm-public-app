@@ -194,27 +194,28 @@ export const PROMPT_EXAMPLES: PromptExample[] = [
 
 // High fidelity responses mapped to the specific buttons or query patterns
 export const MOCK_RESPONSES: Record<string, string> = {
-  default: `I am smsoftware-ai-v0.1, your crash course co-pilot! Let's explore AI & prompt architecture together. 
+  default: `### AI UI/UX Lab Assistant
 
-To help you learn, here is a quick modular code snippet depicting a simple Node.js custom prompt completion frame:
+I am your crash course co-pilot. Ask me about LLM UI, prompt design, chat layout, RAG, model settings, or backend architecture.
 
-\`\`\`typescript
-// The browser sends the prompt to your own backend.
-// The backend owns the provider key and can call OpenAI, Ollama, OpenRouter, etc.
-const response = await fetch('/api/chat', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    message: 'Teach me the basics of prompt embeddings',
-    mode: 'Beginner'
-  })
-});
+Here is how this workspace is designed:
+- The frontend collects your prompt and renders the conversation.
+- The backend receives the prompt through \`/api/chat\`.
+- The backend either calls a configured LLM provider or returns a mock response for teaching.
+- The UI shows the assistant response as normal chat content.
 
-const data = await response.json();
-console.log(data.text);
-\`\`\`
+Try one of the prompt examples below, or ask your own question in the input box.`,
 
-Feel free to click any of the **Prompt Examples** keynotes below or type your questions! I support Beginner, Developer, and Product mode contexts depending on your background.`,
+  'Give me a quick guided tour of this AI UI/UX Lab chat workspace.': `### Quick Tour
+
+This screen is a compact AI chat workspace for teaching LLM product design.
+
+- The left rail controls the learning mode, course module, and new-chat action.
+- The center panel shows the active conversation.
+- The input box sends prompts to the backend route \`/api/chat\`.
+- The backend keeps provider keys private and can switch between mock mode and a real LLM provider.
+
+For the tutorial, this gives you a clean path: first explain the UI, then show how the prompt travels to the backend, then replace mock responses with real model responses.`,
 
   'Explain tokens like I am a beginner. What are they, and why do they matter in LLMs?': `### 🪙 Understanding Tokens in LLMs (A Beginner's Guide)
 

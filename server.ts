@@ -59,7 +59,15 @@ const buildMockResponse = (message: string, mode: PlayMode = 'Beginner') => {
     return baseResponse;
   }
 
-  return `[${mode} backend mock]\n\n${getModeInstruction(mode)}\n\n${baseResponse}`;
+  return `### Response Preview
+
+You asked: "${message}"
+
+${getModeInstruction(mode)}
+
+Because no external LLM provider is configured yet, this is the backend mock response. The important part is that the frontend is already sending your prompt to \`/api/chat\`, and the backend is returning clean assistant text to render in the chat area.
+
+${baseResponse}`;
 };
 
 // Calls any provider that follows the OpenAI chat completions API shape.

@@ -39,7 +39,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
               <div className={`px-4 py-1.5 flex items-center justify-between border-b text-[10px] ${
                 theme === 'dark' ? 'bg-slate-900 border-slate-800/60 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-555'
               }`}>
-                <span>TYPESCRIPT / BASH CONFIG</span>
+                <span>CODE BLOCK</span>
                 <button 
                   onClick={() => handleCopy(currentCode)} 
                   className={`flex items-center gap-1 transition-colors cursor-pointer font-semibold ${
@@ -198,7 +198,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
       )}
 
       {/* Message content panel */}
-      <div className={`max-w-3xl flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
+      <div className={`max-w-4xl flex flex-col ${isUser ? 'items-end' : 'items-start'}`}>
         
         {/* Username and status line */}
         <div className="flex items-center gap-2 mb-1.5 text-[11px] font-mono text-slate-500">
@@ -211,7 +211,7 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
               <span className={`uppercase tracking-widest text-[9px] px-1.5 py-0.5 rounded border font-semibold ${
                 theme === 'dark' ? 'bg-blue-900/15 border-blue-400/20 text-blue-400' : 'bg-blue-50 border-blue-200 text-blue-650'
               }`}>
-                smsoftware-ai-v0.1
+                {message.modelName || 'backend-response'}
               </span>
             </>
           )}
@@ -240,6 +240,9 @@ export default function ChatMessage({ message, theme = 'dark' }: ChatMessageProp
             </span>
             <span className="flex items-center gap-1">
               <Lucide.Hash className="w-2.5 h-2.5" /> Tokens: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-650 font-semibold'}>{message.tokens || 194}</strong>
+            </span>
+            <span className="hidden sm:flex items-center gap-1">
+              <Lucide.Server className="w-2.5 h-2.5" /> Source: <strong className={theme === 'dark' ? 'text-slate-300 font-semibold' : 'text-slate-650 font-semibold'}>{message.modelName || 'backend'}</strong>
             </span>
             <span className="flex items-center gap-1 cursor-pointer hover:text-blue-500" onClick={() => handleCopy(message.content)}>
               <Lucide.Copy className="w-2.5 h-2.5" /> Copy Raw Response

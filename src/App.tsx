@@ -257,7 +257,7 @@ export default function App() {
         )}
 
         {currentView === 'chat' && (
-          <section id="view-chat" className="min-h-[calc(100vh-4rem)]">
+          <section id="view-chat" className="h-[calc(100vh-4rem)] overflow-hidden">
             {/* Fixed left dashboard rail for desktop. It becomes a normal stacked panel on mobile. */}
             <div className={`lg:fixed lg:left-0 lg:top-16 lg:bottom-0 lg:w-[316px] lg:overflow-y-auto px-4 py-4 border-b lg:border-b-0 lg:border-r ${
               theme === 'dark' ? 'border-slate-800/60 bg-[#020617]/95' : 'border-slate-200 bg-white/95'
@@ -278,50 +278,14 @@ export default function App() {
             </div>
 
             {/* Main chat canvas. ChatWindow already owns the input tray at the bottom. */}
-            <div className="lg:ml-[316px] px-4 sm:px-6 lg:px-8 py-4">
-              <div className="max-w-6xl mx-auto">
-                {/* Dashboard strip: simple app status without taking attention away from the chat. */}
-                <div className="mb-4 grid grid-cols-1 xl:grid-cols-[1fr_auto] gap-3 items-center">
-                  <div className={`rounded-xl border px-4 py-3 ${
-                    theme === 'dark' ? 'bg-slate-900/45 border-slate-800/60' : 'bg-white border-slate-200 shadow-sm'
-                  }`}>
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-blue-500 font-semibold">
-                      http://localhost:3000/chat
-                    </p>
-                    <h2 className={`text-2xl font-display font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-                      AI Chat Workspace
-                    </h2>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      ['Model', 'Mock v0.1'],
-                      ['Context', '16k'],
-                      ['Mode', activeMode]
-                    ].map(([label, value]) => (
-                      <div
-                        key={label}
-                        className={`rounded-xl border px-3 py-2 min-w-24 ${
-                          theme === 'dark' ? 'bg-slate-900/45 border-slate-800/60' : 'bg-white border-slate-200 shadow-sm'
-                        }`}
-                      >
-                        <p className="text-[9px] font-mono uppercase tracking-widest text-slate-500">{label}</p>
-                        <p className={`text-xs font-semibold mt-0.5 ${theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}`}>
-                          {value}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
+            <div className="lg:ml-[316px] h-full px-4 sm:px-6 lg:px-8 py-4 overflow-hidden">
+              <div className="max-w-6xl mx-auto h-full">
                 <ChatWindow
                   messages={messages}
                   inputValue={inputValue}
                   onInputChange={setInputValue}
                   onSendMessage={handleSendMessage}
                   isLoading={isLoading}
-                  activeMode={activeMode}
-                  onSelectMode={setActiveMode}
                   theme={theme}
                 />
               </div>
