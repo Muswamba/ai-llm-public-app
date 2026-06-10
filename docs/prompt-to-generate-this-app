@@ -1,0 +1,118 @@
+Create a clean, modern AI/LLM web app UI using Next.js App Router, TypeScript, and Tailwind CSS.
+
+Project name:
+smsoftware-ai-ui
+
+Purpose:
+This is the first UI/UX prototype for an SMSOFTWARE crash course called “Build Your First AI/LLM Model.”
+
+Do not connect a real AI API yet. Build the UI first with mock responses only.
+
+Design style:
+
+Modern dark AI dashboard
+Clean glassmorphism cards
+Deep navy/black background
+Soft blue/purple accents
+Professional SaaS style
+Similar feeling to an AI coding/product assistant
+Responsive for desktop and mobile
+
+Main app screens:
+
+Landing / Home page
+Create a polished landing page with:
+Header/navigation
+SMSOFTWARE AI Lab logo text
+Hero title: “Build Your First AI/LLM Assistant”
+Subtitle: “A simple crash course for learning AI, LLMs, prompts, RAG, and agents.”
+CTA button: “Open AI Playground”
+Secondary button: “View Course Path”
+Feature cards:
+LLM Basics
+Prompt Engineering
+Local Models
+RAG Knowledge Base
+AI Agents
+Fine-Tuning Basics
+AI Playground page
+Create a chatbot-style interface:
+Left sidebar with:
+New chat button
+Course modules list
+Example prompts
+Model status card
+Main chat area with:
+Welcome message
+User/assistant message bubbles
+Textarea input
+Send button
+Mock loading state
+Top bar with:
+Model name: smsoftware-ai-v0.1
+Mode selector: Beginner / Developer / Product
+Status badge: Mock UI
+Course Path section
+Show a simple learning roadmap:
+Lesson 1: AI/LLM Basics
+Lesson 2: Run Your First Local Model
+Lesson 3: Build a Prompt Assistant
+Lesson 4: Add Project Knowledge with RAG
+Lesson 5: Create AI Agent Workflows
+Lesson 6: Prepare Fine-Tuning Data
+Prompt Examples panel
+Add example prompt cards:
+“Explain tokens like I am a beginner.”
+“Audit this Lienskill feature plan.”
+“Create a safe implementation plan.”
+“Summarize this project report.”
+“Build a RAG architecture for SMSOFTWARE.”
+
+Functional behavior:
+
+The chat input should allow typing a message.
+When the user clicks Send, add the user message to the chat.
+Then show a mock assistant response after a short loading state.
+No real backend API yet.
+No API keys.
+No external AI calls.
+Keep everything safe for frontend prototype.
+
+Technical requirements:
+
+Use Next.js App Router.
+Use TypeScript.
+Use Tailwind CSS.
+Use clean component structure.
+Use reusable components:
+Header
+Sidebar
+ChatWindow
+ChatMessage
+PromptCard
+RoadmapCard
+FeatureCard
+Use accessible buttons and inputs.
+Make the layout responsive.
+Avoid unnecessary libraries unless needed.
+Do not use deprecated Gemini SDKs.
+Do not put secrets in client components.
+
+Suggested routes:
+
+/ for landing page
+/playground for AI playground
+/course for course roadmap
+
+Expected output:
+Generate the complete Next.js project code with all files needed.
+
+Also include:
+
+setup commands
+folder structure
+how to run locally
+short explanation of each major component
+
+Important:
+This is UI/UX phase only. The next phase will connect the chat UI to Gemini or Ollama.

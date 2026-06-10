@@ -1,0 +1,6 @@
+{
+  "name": "SMSOFTWARE AI UI",
+  "description": "SMSOFTWARE Crash Course AI/LLM UI/UX Prototype, featuring a design-forward playground, learning roadmap, and interactive elements.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
